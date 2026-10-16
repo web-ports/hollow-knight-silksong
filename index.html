@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <base href="https://cdn.jsdelivr.net/gh/web-ports/hollow-knight-silksong@master/">
+    <base href="https://github.com/pine-and-frost/hollow-knight-silksong/blob/master/">
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity Web Player | Hollow Knight SilkSong</title>
@@ -158,9 +158,12 @@ async function mergeFiles(parts) {
 
 /* ================= UTIL ================= */
 function getParts(file, start, end) {
+  // Serve parts from jsDelivr CDN for this repository so the page
+  // fetches raw bytes instead of GitHub blob HTML pages.
+  const CDN_BASE = "https://cdn.jsdelivr.net/gh/pine-and-frost/hollow-knight-silksong@master/";
   let parts = [];
   for (let i = start; i <= end; i++) {
-    parts.push(file + ".part" + i);
+    parts.push(CDN_BASE + file + ".part" + i);
   }
   return parts;
 }
@@ -168,7 +171,7 @@ function getParts(file, start, end) {
 /* ================= MAIN ================= */
 (async () => {
   try {
-    await cleanupOldCaches(); 
+    await cleanupOldCaches();
     if (!(await isCached())) {
       loadingText.textContent = "DOWNLOADING ASSETS...";
 
@@ -228,7 +231,7 @@ function getParts(file, start, end) {
     loadingBar.style.display = "block";
 
     const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/gh/web-ports/hollow-knight-silksong@latest/Build/w-pt.loader.js";
+    script.src = "https://cdn.jsdelivr.net/gh/pine-and-frost/hollow-knight-silksong@master/Build/w-pt.loader.js";
 
     script.onload = () => {
       createUnityInstance(canvas, config, (progress) => {
